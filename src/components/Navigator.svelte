@@ -80,7 +80,7 @@
 		{:else}
 			<a href="/">
 				<!-- svelte-ignore a11y-accesskey -->
-				<button accesskey="b" class="btn btn-light" on:click={emptyAnswer}>Dashboard</button>
+				<button accesskey="b" class="btn btn-light">Dashboard</button>
 			</a>
 		{/if}
 	</div>
