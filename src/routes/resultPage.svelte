@@ -55,14 +55,14 @@
 	<div class="container d-flex justify-content-center mt-4 flex-column align-items-center">
 		<div class="d-flex" style="width: 800px;">
 			<div
-				class="d-flex flex-column align-items-center  btn  bg-opacity-25 border rounded w-50"
+				class="d-flex flex-column align-items-center btn  bg-opacity-25 border rounded w-50"
 				style="background-color: #e3e3e3!important;border-color: #bababa!important"
 			>
 				<p style="color: indigo">{percentage} %</p>
 				<h6>Result</h6>
 			</div>
 			<div
-				class="d-flex flex-column align-items-center btn border rounded w-50 ms-3"
+				class="d-flex flex-column align-items-center btn border rounded w-50  ms-3"
 				style="border-color:#5f96bf!important;"
 			>
 				<p class="text-primary">11</p>

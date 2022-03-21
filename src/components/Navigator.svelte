@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import Confirmation from './confirmation.svelte';
+	import Confirmation from './Confirmation.svelte';
 	import { reviewNavigator, chooseAns } from '../store.js';
 	import Sidebar from './Sidebar.svelte';
 	import Timer from '../components/Timer.svelte';
