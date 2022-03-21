@@ -20,7 +20,7 @@
 		} else {
 			correctIndex = null;
 			unselectedQues[i]=i+1
-			console.log('heoodjjde',unselectedQues)
+			// console.log('heoodjjde',unselectedQues)
 		}
 		answerChoosebyUserArr[i] = correctIndex;
 	}
@@ -44,7 +44,7 @@
 				incorrect = incorrect + 1;
 			}
 		}
-    console.log('choose ans',$chooseAns)
+    // console.log('choose ans',$chooseAns)
 	const reviewPage = () => {
 		reviewNavigator.set(true);
 	};
