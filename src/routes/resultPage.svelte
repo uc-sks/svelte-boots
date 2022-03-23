@@ -1,7 +1,6 @@
 <script>
 	import { questionData, chooseAns, answerCheckedByUser,attemptQuestion,reviewNavigator } from '../store';
 	import Header from '../components/Header.svelte';
-	import { truncate } from '../function/truncate';
 	$: option = ['A', 'B', 'C', 'D'];
     let correct=0
     let incorrect=0
@@ -105,7 +104,7 @@
 						<th scope="row">{i + 1}</th>
 						<td>
                             <a  on:click={reviewPage} href={`review/${i}`} class="w-100 text-decoration-none text-dark">
-                                {truncate(`${JSON.parse(ques.content_text).question}`)}
+                                {ques.snippet}
                             </a>
                         </td>
 						<td class="d-flex">

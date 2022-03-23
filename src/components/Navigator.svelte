@@ -82,6 +82,10 @@
 				<!-- svelte-ignore a11y-accesskey -->
 				<button accesskey="b" class="btn btn-light">Dashboard</button>
 			</a>
+			<a href="/resultPage">
+				<!-- svelte-ignore a11y-accesskey -->
+				<button accesskey="b" class="btn btn-light">Result</button>
+			</a>
 		{/if}
 	</div>
 </div>
