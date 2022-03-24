@@ -1,13 +1,28 @@
 <script>
-	import { questionData, chooseAns, answerCheckedByUser,attemptQuestion,reviewNavigator } from '../store';
+/**
+*	fileName  		:  		resultPage.svelte
+*	Description 	: 		showing result page 
+*	Author   		: 		shivam singh
+*	version 		: 		1.0
+*	created 		: 		08-feb-2022;
+*	updated by 		: 		shivam singh   <shivam.singh@ucertify.com>
+*	updated date 	: 		24-mar2022
+*/
+	import {
+		questionData,
+		chooseAns,
+		answerCheckedByUser,
+		attemptQuestion,
+		reviewNavigator
+	} from '../store';
 	import Header from '../components/Header.svelte';
-	$: option = ['A', 'B', 'C', 'D'];
-    let correct=0
-    let incorrect=0
-    let percentage=0
-	let answerChoosebyUserArr = []; // collecting the answwer selected by user
-	let actualCorrectArray = []; //collecting the correct answer of question (in json)
-	let unselectedQues=[]
+	// $: option = ['A', 'B', 'C', 'D'];
+	let correct = 0;
+	let incorrect = 0;
+	let percentage = 0;
+	let answerChoosebyUserArr = [];
+	let actualCorrectArray = []; 
+	let unselectedQues = [];
 	$: for (let i = 0; i < $questionData.length; i++) {
 		let correctIndex = 0;
 		if ($chooseAns[i]) {
@@ -18,8 +33,7 @@
 			}
 		} else {
 			correctIndex = null;
-			unselectedQues[i]=i+1
-			// console.log('heoodjjde',unselectedQues)
+			unselectedQues[i] = i + 1;
 		}
 		answerChoosebyUserArr[i] = correctIndex;
 	}
@@ -32,18 +46,17 @@
 		}
 		actualCorrectArray[i] = actualCorrect;
 	}
-    $answerCheckedByUser.sort(function (a, b) {
-			return a.quesNo - b.quesNo;
-		});
-		for (let i = 0; i < $answerCheckedByUser.length; i++) {
-			if ($answerCheckedByUser[i].userAns == 1) {
-				correct = correct + 1;
-				percentage = Math.round((correct / 11) * 100);
-			} else {
-				incorrect = incorrect + 1;
-			}
+	$answerCheckedByUser.sort(function (a, b) {
+		return a.quesNo - b.quesNo;
+	});
+	for (let i = 0; i < $answerCheckedByUser.length; i++) {
+		if ($answerCheckedByUser[i].userAns == 1) {
+			correct = correct + 1;
+			percentage = Math.round((correct / 11) * 100);
+		} else {
+			incorrect = incorrect + 1;
 		}
-    // console.log('choose ans',$chooseAns)
+	}
 	const reviewPage = () => {
 		reviewNavigator.set(true);
 	};
@@ -103,12 +116,16 @@
 					<tr>
 						<th scope="row">{i + 1}</th>
 						<td>
-                            <a  on:click={reviewPage} href={`review/${i}`} class="w-100 text-decoration-none text-dark">
-                                {ques.snippet}
-                            </a>
-                        </td>
+							<a
+								on:click={reviewPage}
+								href={`review/${i}`}
+								class="w-100 text-decoration-none text-dark"
+							>
+								{ques.snippet}
+							</a>
+						</td>
 						<td class="d-flex">
-							{#each option as op, j}
+							{#each JSON.parse(ques.content_text).answers as answers, j}
 								<p
 									class="{`${
 										actualCorrectArray[i] == j ? 'bg-success' : ''
@@ -119,11 +136,10 @@
 										: false}
 									style="width: 24px; height:24px"
 								>
-									{op}
+									{String.fromCharCode(65+j)}
 								</p>
 							{/each}
 						</td>
-
 						<td>
 							{#each $answerCheckedByUser as selectQue}
 								{#if i + 1 == selectQue.quesNo}

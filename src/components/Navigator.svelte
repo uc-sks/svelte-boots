@@ -10,6 +10,7 @@
 	let confirm_show = false;
 	export let questionId;
 	questionId = Number(questionId);
+	$: current__ques = !$reviewNavigator ? currentQues : questionId;
 	// previous page function
 	const prevPage = () => {
 		dispatch('prevPage');
@@ -35,48 +36,33 @@
 		</button>
 		<Sidebar bind:show={sidebar_show} on:displayQuesNum={displayQuesNum} />
 		<!-- svelte-ignore a11y-accesskey -->
-		{#if !$reviewNavigator}
 		<button
-		on:click={prevPage}
-		class="btn btn-light"
-		accesskey="v"
-		disabled={currentQues < 1 ? true : false}>Previous</button
-	>
-		{:else}
-		<button
-		on:click={prevPage}
-		class="btn btn-light"
-		accesskey="v"
-		disabled={questionId < 1 ? true : false}>Previous</button
-	>
-		{/if}
+			on:click={prevPage}
+			class="btn btn-light"
+			accesskey="n"
+			disabled={current__ques < 1 ? true : false}>Previous</button
+		>
 		{#if !$reviewNavigator}
-			<span>{currentQues + 1} of 11</span>
-		{:else}
+			{#if (currentQues + 1).toString().length > 1}
+				<span>{currentQues + 1} of 11</span>
+			{:else}
+				<span>0{currentQues + 1} of 11</span>
+			{/if}
+		{:else if (questionId + 1).toString().length > 1}
 			<span>{questionId + 1} of 11</span>
-		{/if}
-		<!-- svelte-ignore a11y-accesskey -->
-		{#if !$reviewNavigator}
-			<button
-				on:click={nextPage}
-				class="btn btn-light"
-				accesskey="n"
-				disabled={currentQues + 1 > 10 ? true : false}>Next</button
-			>
 		{:else}
-			<button
-				on:click={nextPage}
-				class="btn btn-light"
-				accesskey="n"
-				disabled={questionId + 1 > 10 ? true : false}>Next</button
-			>
+			<span>0{questionId + 1} of 11</span>
 		{/if}
-
+		<!-- svelte-ignore a11y-accesskey -->
+		<button
+			on:click={nextPage}
+			class="btn btn-light"
+			accesskey="n"
+			disabled={current__ques + 1 > 10 ? true : false}>Next</button
+		>
 		<!-- svelte-ignore a11y-accesskey -->
 		{#if !$reviewNavigator}
-			<button class="btn btn-light" accesskey="t" on:click={() => (confirm_show = !confirm_show)}
-				>End Test</button
-			>
+			<button class="btn btn-light" accesskey="t" on:click={() => (confirm_show = !confirm_show)}>End Test</button>
 		{:else}
 			<a href="/">
 				<!-- svelte-ignore a11y-accesskey -->
