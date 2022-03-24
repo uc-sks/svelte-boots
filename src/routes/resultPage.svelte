@@ -16,7 +16,6 @@
 		reviewNavigator
 	} from '../store';
 	import Header from '../components/Header.svelte';
-	// $: option = ['A', 'B', 'C', 'D'];
 	let correct = 0;
 	let incorrect = 0;
 	let percentage = 0;

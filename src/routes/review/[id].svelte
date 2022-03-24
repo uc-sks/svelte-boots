@@ -8,7 +8,6 @@
 		};
 	};
 </script>
-
 <script>
 	/**
 *	fileName  		:  		[id].svelte
@@ -19,7 +18,6 @@
 *	updated by 		: 		shivam singh   shivam.singh@ucertify.com
 *	updated date 	: 		24-mar2022
 */
-
 	// @ts-nocheck
 	import Header from '../../components/Header.svelte';
 	import Navigator from '../../components/Navigator.svelte';

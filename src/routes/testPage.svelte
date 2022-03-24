@@ -15,7 +15,6 @@
 	let questionJsonData = [];
 	let checkedOpt = [];
 	let currentQues = 0;
-	// $: option = ['A', 'B', 'C', 'D'];
 	let userAnswer = [];
 	let useCheckAns;
 	onMount(async () => {
