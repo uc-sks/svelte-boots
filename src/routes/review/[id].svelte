@@ -22,7 +22,6 @@
 	import Header from '../../components/Header.svelte';
 	import Navigator from '../../components/Navigator.svelte';
 	import { questionData, reviewNavigator, answerCheckedByUser } from '../../store';
-	$: option = ['A', 'B', 'C', 'D'];
 	import { onDestroy } from 'svelte';
 	export let id;
 	let pageNo = Number(id);
