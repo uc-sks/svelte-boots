@@ -66,13 +66,13 @@
 						{#each JSON.parse(queData.content_text).answers as answers, j}
 							<div class="d-flex">
 								{#if answers.is_correct == 1}
-									<p class="h6 my-auto">{option[j]}</p>
+									<p class="h6 my-auto">{String.fromCharCode(65+j)}</p>
 									<label class="w-100 m-2">
 										<input type="radio" checked />
 										{@html answers.answer}
 									</label>
 								{:else}
-									<p class="h6 my-auto">{option[j]}</p>
+									<p class="h6 my-auto">{String.fromCharCode(65+j)}</p>
 									<label class="w-100 m-2">
 										<input type="radio" disabled />
 										{@html answers.answer}
@@ -108,7 +108,7 @@
 </div>
 <div class="position-fixed w-50 bg-dark text-white" style="bottom:15px; right:15px">
 	<Navigator
-		questionId={pageNo}
+		question__id={pageNo}
 		on:prevPage={decrementPage}
 		on:nextPage={incrementPage}
 		on:updateQues={upDateQuestionPage}

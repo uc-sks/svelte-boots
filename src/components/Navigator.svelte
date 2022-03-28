@@ -6,11 +6,11 @@
 	import Timer from '../components/Timer.svelte';
 	const dispatch = createEventDispatcher();
 	export let currentQues; //for changing current question (for next and pre)
-	let sidebar_show = false;
-	let confirm_show = false;
-	export let questionId;
-	questionId = Number(questionId);
-	$: current__ques = !$reviewNavigator ? currentQues : questionId;
+	let sidebar__show = false;
+	let confirm__show = false;
+	export let question__id;
+	question__id = Number(question__id);
+	$: current__ques = !$reviewNavigator ? currentQues : question__id;
 	// previous page function
 	const prevPage = () => {
 		dispatch('prevPage');
@@ -31,10 +31,10 @@
 			<Timer />
 		{/if}
 		<!-- svelte-ignore a11y-accesskey -->
-		<button on:click={() => (sidebar_show = !sidebar_show)} class="btn btn-light" accesskey="l">
+		<button on:click={() => (sidebar__show = !sidebar__show)} class="btn btn-light" accesskey="l">
 			List
 		</button>
-		<Sidebar bind:show={sidebar_show} on:displayQuesNum={displayQuesNum} />
+		<Sidebar bind:show={sidebar__show} on:displayQuesNum={displayQuesNum} />
 		<!-- svelte-ignore a11y-accesskey -->
 		<button
 			on:click={prevPage}
@@ -48,10 +48,10 @@
 			{:else}
 				<span>0{currentQues + 1} of 11</span>
 			{/if}
-		{:else if (questionId + 1).toString().length > 1}
-			<span>{questionId + 1} of 11</span>
+		{:else if (question__id + 1).toString().length > 1}
+			<span>{question__id + 1} of 11</span>
 		{:else}
-			<span>0{questionId + 1} of 11</span>
+			<span>0{question__id + 1} of 11</span>
 		{/if}
 		<!-- svelte-ignore a11y-accesskey -->
 		<button
@@ -62,7 +62,8 @@
 		>
 		<!-- svelte-ignore a11y-accesskey -->
 		{#if !$reviewNavigator}
-			<button class="btn btn-light" accesskey="t" on:click={() => (confirm_show = !confirm_show)}>End Test</button>
+			<button class="btn btn-light" accesskey="t" on:click={() => (confirm__show = !confirm__show)}>End Test</button
+			>
 		{:else}
 			<a href="/">
 				<!-- svelte-ignore a11y-accesskey -->
@@ -75,4 +76,4 @@
 		{/if}
 	</div>
 </div>
-<Confirmation bind:show={confirm_show} />
+<Confirmation bind:show={confirm__show} />
