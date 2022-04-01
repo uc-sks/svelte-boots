@@ -9,6 +9,8 @@
 	};
 </script>
 <script>
+// @ts-nocheck
+
 	/**
 *	fileName  		:  		[id].svelte
 *	Description 	: 		showing review page with selected question

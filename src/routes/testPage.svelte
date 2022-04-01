@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	/**
 	 *	fileName  		:  		testPage.svelte
 	 *	Description 	: 		showing test page with question answer and navigator data
@@ -99,7 +101,7 @@
 	</div>
 </div>
 <div
-	class="textPage__navigator position-fixed w-50  bg-dark text-white"
+	class="position-fixed w-50  bg-dark text-white"
 	style="bottom:15px;right:15px"
 >
 	<Navigator

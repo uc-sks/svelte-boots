@@ -25,8 +25,8 @@
 	};
 </script>
 
-<div class="navigator">
-	<div class="navigator__option d-flex justify-content-between p-2 align-items-center">
+<div>
+	<div class="d-flex justify-content-between p-2 align-items-center">
 		{#if !$reviewNavigator}
 			<Timer />
 		{/if}
@@ -62,7 +62,8 @@
 		>
 		<!-- svelte-ignore a11y-accesskey -->
 		{#if !$reviewNavigator}
-			<button class="btn btn-light" accesskey="t" on:click={() => (confirm__show = !confirm__show)}>End Test</button
+			<button class="btn btn-light" accesskey="t" on:click={() => (confirm__show = !confirm__show)}
+				>End Test</button
 			>
 		{:else}
 			<a href="/">

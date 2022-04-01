@@ -61,7 +61,7 @@
 	};
 </script>
 
-<div class="result__page">
+<div>
 	<Header />
 	<div class="container d-flex justify-content-center mt-4 flex-column align-items-center">
 		<div class="d-flex" style="width: 800px;">

@@ -16,7 +16,6 @@
 
 {#if show}
 	<div
-		on:click={() => (show = false)}
 		use:clickOutside
 		on:click_outside={handleClickOutside}
 		class="list position-fixed  start-0 h-100 bg-white text-dark border d-flex flex-column p-2"
@@ -32,6 +31,7 @@
 				class="border mt-2 p-1"
 				style="cursor: pointer;"
 				on:click={() => displayQues(i)}
+				on:click={() => (show = false)}
 				accesskey={`${i + 1}`}
 			>
 				<span class="text-black fw-bold ">Ques {i + 1}.</span>
