@@ -1,16 +1,16 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import Confirmation from './Confirmation.svelte';
-	import { reviewNavigator, chooseAns } from '../store.js';
+	import { review__navi, choose__ans } from '../store.js';
 	import Sidebar from './Sidebar.svelte';
 	import Timer from '../components/Timer.svelte';
 	const dispatch = createEventDispatcher();
-	export let currentQues; //for changing current question (for next and pre)
+	export let current__ques; //for changing current question (for next and pre)
 	let sidebar__show = false;
 	let confirm__show = false;
 	export let question__id;
 	question__id = Number(question__id);
-	$: current__ques = !$reviewNavigator ? currentQues : question__id;
+	$: current__ques = !$review__navi ? current__ques : question__id;
 	// previous page function
 	const prevPage = () => {
 		dispatch('prevPage');
@@ -27,7 +27,7 @@
 
 <div>
 	<div class="d-flex justify-content-between p-2 align-items-center">
-		{#if !$reviewNavigator}
+		{#if !$review__navi}
 			<Timer />
 		{/if}
 		<!-- svelte-ignore a11y-accesskey -->
@@ -42,11 +42,11 @@
 			accesskey="n"
 			disabled={current__ques < 1 ? true : false}>Previous</button
 		>
-		{#if !$reviewNavigator}
-			{#if (currentQues + 1).toString().length > 1}
-				<span>{currentQues + 1} of 11</span>
+		{#if !$review__navi}
+			{#if (current__ques + 1).toString().length > 1}
+				<span>{current__ques + 1} of 11</span>
 			{:else}
-				<span>0{currentQues + 1} of 11</span>
+				<span>0{current__ques + 1} of 11</span>
 			{/if}
 		{:else if (question__id + 1).toString().length > 1}
 			<span>{question__id + 1} of 11</span>
@@ -61,7 +61,7 @@
 			disabled={current__ques + 1 > 10 ? true : false}>Next</button
 		>
 		<!-- svelte-ignore a11y-accesskey -->
-		{#if !$reviewNavigator}
+		{#if !$review__navi}
 			<button class="btn btn-light" accesskey="t" on:click={() => (confirm__show = !confirm__show)}
 				>End Test</button
 			>

@@ -1,6 +1,6 @@
 <script>
 	import { fly } from 'svelte/transition';
-	import { questionData, attemptQuestion } from '../store';
+	import { question__data, attempt__ques } from '../store';
 	import { clickOutside } from '../function/clickOutside';
 	import { createEventDispatcher } from 'svelte';
 	import { truncate } from '../function/truncate';
@@ -22,10 +22,10 @@
 		style="width:250px;top:58px"
 		transition:fly={{ x: -250, opacity: 1 }}
 	>
-		<p class="mb-1 border p-1">Attempte question:{$attemptQuestion}</p>
-		<p class="border p-1">Unuttempted Question:{$questionData.length - $attemptQuestion}</p>
+		<p class="mb-1 border p-1">Attempte question:{$attempt__ques}</p>
+		<p class="border p-1">Unuttempted Question:{$question__data.length - $attempt__ques}</p>
 		<hr />
-		{#each $questionData as data, i}
+		{#each $question__data as data, i}
 			<!-- svelte-ignore a11y-accesskey -->
 			<span
 				class="border mt-2 p-1"

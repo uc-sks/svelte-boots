@@ -9,47 +9,47 @@
 *	updated date 	: 		24-mar2022
 */
 	import {
-		questionData,
-		chooseAns,
-		answerCheckedByUser,
-		attemptQuestion,
-		reviewNavigator
+		question__data,
+		choose__ans,
+		answercheckedby__user,
+		attempt__ques,
+		review__navi
 	} from '../store';
 	import Header from '../components/Header.svelte';
 	let correct = 0;
 	let incorrect = 0;
 	let percentage = 0;
-	let answerChoosebyUserArr = [];
-	let actualCorrectArray = []; 
-	let unselectedQues = [];
-	$: for (let i = 0; i < $questionData.length; i++) {
-		let correctIndex = 0;
-		if ($chooseAns[i]) {
+	let answerchoosebyuser__arr = [];
+	let actualcorrect__arry = []; 
+	let unselected__ques = [];
+	$: for (let i = 0; i < $question__data.length; i++) {
+		let correct__indx = 0;
+		if ($choose__ans[i]) {
 			for (let j = 0; j < 4; j++) {
-				if (JSON.parse($questionData[i].content_text).answers[j].answer == $chooseAns[i]) {
-					correctIndex = j;
+				if (JSON.parse($question__data[i].content_text).answers[j].answer == $choose__ans[i]) {
+					correct__indx = j;
 				}
 			}
 		} else {
-			correctIndex = null;
-			unselectedQues[i] = i + 1;
+			correct__indx = null;
+			unselected__ques[i] = i + 1;
 		}
-		answerChoosebyUserArr[i] = correctIndex;
+		answerchoosebyuser__arr[i] = correct__indx;
 	}
-	$: for (let i = 0; i < $questionData.length; i++) {
+	$: for (let i = 0; i < $question__data.length; i++) {
 		let actualCorrect = 0;
 		for (let j = 0; j < 4; j++) {
-			if (JSON.parse($questionData[i].content_text).answers[j].is_correct == '1') {
+			if (JSON.parse($question__data[i].content_text).answers[j].is_correct == '1') {
 				actualCorrect = j;
 			}
 		}
-		actualCorrectArray[i] = actualCorrect;
+		actualcorrect__arry[i] = actualCorrect;
 	}
-	$answerCheckedByUser.sort(function (a, b) {
-		return a.quesNo - b.quesNo;
+	$answercheckedby__user.sort(function (a, b) {
+		return a.ques__no - b.ques__no;
 	});
-	for (let i = 0; i < $answerCheckedByUser.length; i++) {
-		if ($answerCheckedByUser[i].userAns == 1) {
+	for (let i = 0; i < $answercheckedby__user.length; i++) {
+		if ($answercheckedby__user[i].user__ans == 1) {
 			correct = correct + 1;
 			percentage = Math.round((correct / 11) * 100);
 		} else {
@@ -57,7 +57,7 @@
 		}
 	}
 	const reviewPage = () => {
-		reviewNavigator.set(true);
+		review__navi.set(true);
 	};
 </script>
 
@@ -97,7 +97,7 @@
 				class="d-flex flex-column align-items-center btn border rounded w-50 ms-3"
 				style="border-color: #5f96bf!important;"
 			>
-				<p class="text-warning">{11 - $answerCheckedByUser.length}</p>
+				<p class="text-warning">{11 - $answercheckedby__user.length}</p>
 				<h6>Unattempted</h6>
 			</div>
 		</div>
@@ -111,7 +111,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each $questionData as ques, i}
+				{#each $question__data as ques, i}
 					<tr>
 						<th scope="row">{i + 1}</th>
 						<td>
@@ -127,10 +127,10 @@
 							{#each JSON.parse(ques.content_text).answers as answers, j}
 								<p
 									class="{`${
-										actualCorrectArray[i] == j ? 'bg-success' : ''
+										actualcorrect__arry[i] == j ? 'bg-success' : ''
 									}`}   border d-flex justify-content-center align-items-center ms-2  text-dark rounded"
-									class:selected={actualCorrectArray[i] != answerChoosebyUserArr[i] &&
-									answerChoosebyUserArr[i] == j
+									class:selected={actualcorrect__arry[i] != answerchoosebyuser__arr[i] &&
+									answerchoosebyuser__arr[i] == j
 										? true
 										: false}
 									style="width: 24px; height:24px"
@@ -140,16 +140,16 @@
 							{/each}
 						</td>
 						<td>
-							{#each $answerCheckedByUser as selectQue}
-								{#if i + 1 == selectQue.quesNo}
-									{#if selectQue.userAns == 0}
+							{#each $answercheckedby__user as selectQue}
+								{#if i + 1 == selectQue.ques__no}
+									{#if selectQue.user__ans == 0}
 										InCorrect
 									{:else}
 										correct
 									{/if}
 								{/if}
 							{/each}
-							{#each unselectedQues as un}
+							{#each unselected__ques as un}
 								{#if i + 1 == un}
 									Unattempted
 								{/if}

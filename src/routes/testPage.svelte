@@ -11,58 +11,56 @@
 	 *	updated date 	: 		24-mar2022
 	 */
 	import Header from '../components/Header.svelte';
-	import { questionData, chooseAns, answerCheckedByUser, attemptQuestion } from '../store';
+	import { question__data, choose__ans, answercheckedby__user, attempt__ques } from '../store';
 	import { onMount } from 'svelte';
 	import Navigator from '../components/Navigator.svelte';
-	let questionJsonData = [];
-	let checkedOpt = [];
-	let currentQues = 0;
-	let userAnswer = [];
-	let useCheckAns;
+	let questionjson__data = [];
+	let checked__opt = [];
+	let current__ques = 0;
+	let user__ans = [];
+	let usecheck__ans;
 	onMount(async () => {
+		$choose__ans = checked__opt 
 		const response = await fetch(`/data/question.json`);
-		questionJsonData = await response.json();
-		questionData.set(questionJsonData);
-	});
-	$: chooseAns.update((items) => {
-		return [...checkedOpt];
+		questionjson__data = await response.json();
+		question__data.set(questionjson__data);
 	});
 	const getClassList = (j, i) => {
-		const que = JSON.parse(questionJsonData[currentQues].content_text).question;
-		const ans = JSON.parse(questionJsonData[currentQues].content_text).answers[j].is_correct;
-		const id = JSON.parse(questionJsonData[currentQues].content_text).answers[j].id;
-		if (userAnswer.length > 0) {
-			useCheckAns = {
-				quesNo: i + 1,
-				userId: id,
-				userQue: que,
-				userAns: ans,
-				userOptionCheck: j
+		const que = JSON.parse(questionjson__data[current__ques].content_text).question;
+		const ans = JSON.parse(questionjson__data[current__ques].content_text).answers[j].is_correct;
+		const id = JSON.parse(questionjson__data[current__ques].content_text).answers[j].id;
+		if (user__ans.length > 0) {
+			usecheck__ans = {
+				ques__no: i + 1,
+				user__id: id,
+				user__que: que,
+				user__ans: ans,
+				useroptioncheck: j
 			};
-			for (let i = 0; i <= userAnswer.length; i++) {
-				if (userAnswer[i].userQue == useCheckAns.userQue) {
-					userAnswer[i] = useCheckAns;
+			for (let i = 0; i <= user__ans.length; i++) {
+				if (user__ans[i].user__que == usecheck__ans.user__que) {
+					user__ans[i] = usecheck__ans;
 					break;
 				} else {
-					userAnswer.push(useCheckAns);
+					user__ans.push(usecheck__ans);
 				}
 			}
 		}
-		if (userAnswer.length == 0) {
-			userAnswer.push({
-				quesNo: i + 1,
-				userId: id,
-				userQue: que,
-				userAns: ans,
-				userOptionCheck: j
+		if (user__ans.length == 0) {
+			user__ans.push({
+				ques__no: i + 1,
+				user__id: id,
+				user__que: que,
+				user__ans: ans,
+				useroptioncheck: j
 			});
 		}
-		let userSelected = Object.values(
-			userAnswer.reduce((acc, cur) => Object.assign(acc, { [cur.userQue]: cur }), {})
+		let userselected = Object.values(
+			user__ans.reduce((acc, cur) => Object.assign(acc, { [cur.user__que]: cur }), {})
 		);
-		answerCheckedByUser.set(userSelected);
-		for (i = 0; i <= userSelected.length; i++) {
-			attemptQuestion.update((x) => (x = userSelected.length));
+		answercheckedby__user.set(userselected);
+		for (i = 0; i <= userselected.length; i++) {
+			attempt__ques.update((x) => (x = userselected.length));
 		}
 	};
 </script>
@@ -70,14 +68,14 @@
 <div>
 	<Header />
 	<div class="container mt-4">
-		{#each questionJsonData as queData, i}
-			{#if currentQues === i}
+		{#each questionjson__data as quedata, i}
+			{#if current__ques === i}
 				<div>
 					<span class="h5">
-						{i + 1} . {JSON.parse(queData.content_text).question}
+						{i + 1} . {JSON.parse(quedata.content_text).question}
 					</span>
 					<div class="d-flex flex-column mt-4 border">
-						{#each JSON.parse(queData.content_text).answers as answers, j}
+						{#each JSON.parse(quedata.content_text).answers as answers, j}
 							<div class="d-flex align-items-center p-2">
 								<p class="my-auto h6">{String.fromCharCode(65+j)}</p>
 								<label class="w-100 pointer">
@@ -87,7 +85,7 @@
 										value={answers.answer}
 										name="radio"
 										id="radio{j}"
-										bind:group={checkedOpt[i]}
+										bind:group={checked__opt[i]}
 										on:click={() => getClassList(j, i)}
 									/>
 									{@html answers.answer}
@@ -105,11 +103,11 @@
 	style="bottom:15px;right:15px"
 >
 	<Navigator
-		{currentQues}
-		on:prevPage={() => (currentQues = currentQues - 1)}
-		on:nextPage={() => (currentQues = currentQues + 1)}
+		{current__ques}
+		on:prevPage={() => (current__ques = current__ques - 1)}
+		on:nextPage={() => (current__ques = current__ques + 1)}
 		on:updateQues={(event) => {
-			currentQues = event.detail;
+			current__ques = event.detail;
 		}}
 	/>
 </div>
