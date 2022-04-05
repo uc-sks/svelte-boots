@@ -1,27 +1,27 @@
 <script>
-/**
-*	fileName  		:  		resultPage.svelte
-*	Description 	: 		showing result page 
-*	Author   		: 		shivam singh
-*	version 		: 		1.0
-*	created 		: 		08-feb-2022;
-*	updated by 		: 		shivam singh   <shivam.singh@ucertify.com>
-*	updated date 	: 		24-mar2022
-*/
+	/**
+	 *	fileName  		:  		resultPage.svelte
+	 *	Description 	: 		showing result page
+	 *	Author   		: 		shivam singh
+	 *	version 		: 		1.0
+	 *	created 		: 		08-feb-2022;
+	 *	updated by 		: 		shivam singh   <shivam.singh@ucertify.com>
+	 *	updated date 	: 		24-mar2022
+	 */
 	import {
 		question__data,
 		choose__ans,
-		answercheckedby__user,
-		attempt__ques,
-		review__navi
+		review__navi,
+		answerchoosebyuser,
+		actualcorrect
 	} from '../store';
 	import Header from '../components/Header.svelte';
 	let correct = 0;
 	let incorrect = 0;
 	let percentage = 0;
 	let answerchoosebyuser__arr = [];
-	let actualcorrect__arry = []; 
-	let unselected__ques = [];
+	let actualcorrect__arry = [];
+	$: unselected__ques=0
 	$: for (let i = 0; i < $question__data.length; i++) {
 		let correct__indx = 0;
 		if ($choose__ans[i]) {
@@ -32,9 +32,9 @@
 			}
 		} else {
 			correct__indx = null;
-			unselected__ques[i] = i + 1;
 		}
 		answerchoosebyuser__arr[i] = correct__indx;
+		$answerchoosebyuser[i]=correct__indx
 	}
 	$: for (let i = 0; i < $question__data.length; i++) {
 		let actualCorrect = 0;
@@ -44,16 +44,18 @@
 			}
 		}
 		actualcorrect__arry[i] = actualCorrect;
+		$actualcorrect[i]=actualCorrect
 	}
-	$answercheckedby__user.sort(function (a, b) {
-		return a.ques__no - b.ques__no;
-	});
-	for (let i = 0; i < $answercheckedby__user.length; i++) {
-		if ($answercheckedby__user[i].user__ans == 1) {
-			correct = correct + 1;
-			percentage = Math.round((correct / 11) * 100);
-		} else {
-			incorrect = incorrect + 1;
+	$: for (let i = 0; i < answerchoosebyuser__arr.length; i++) {
+		if (answerchoosebyuser__arr[i] != null) {
+			if (answerchoosebyuser__arr[i] == actualcorrect__arry[i]) {
+				correct = correct + 1;
+				percentage = Math.round((correct / 11) * 100);
+			} else {
+				incorrect = incorrect + 1;
+			}
+		} else{
+			unselected__ques+=1;
 		}
 	}
 	const reviewPage = () => {
@@ -97,7 +99,7 @@
 				class="d-flex flex-column align-items-center btn border rounded w-50 ms-3"
 				style="border-color: #5f96bf!important;"
 			>
-				<p class="text-warning">{11 - $answercheckedby__user.length}</p>
+				<p class="text-warning">{unselected__ques}</p>
 				<h6>Unattempted</h6>
 			</div>
 		</div>
@@ -124,7 +126,7 @@
 							</a>
 						</td>
 						<td class="d-flex">
-							{#each JSON.parse(ques.content_text).answers as answers, j}
+							{#each JSON.parse(ques.content_text).answers as _, j}
 								<p
 									class="{`${
 										actualcorrect__arry[i] == j ? 'bg-success' : ''
@@ -135,25 +137,18 @@
 										: false}
 									style="width: 24px; height:24px"
 								>
-									{String.fromCharCode(65+j)}
+									{String.fromCharCode(65 + j)}
 								</p>
 							{/each}
 						</td>
 						<td>
-							{#each $answercheckedby__user as selectQue}
-								{#if i + 1 == selectQue.ques__no}
-									{#if selectQue.user__ans == 0}
-										InCorrect
-									{:else}
-										correct
-									{/if}
-								{/if}
-							{/each}
-							{#each unselected__ques as un}
-								{#if i + 1 == un}
-									Unattempted
-								{/if}
-							{/each}
+							{#if answerchoosebyuser__arr[i] == actualcorrect__arry[i]}
+								<span>Correct</span>
+							{:else if answerchoosebyuser__arr[i] == null}
+								<span>Unattempted</span>
+							{:else}
+								<span>Incorrect</span>
+							{/if}
 						</td>
 					</tr>
 				{/each}

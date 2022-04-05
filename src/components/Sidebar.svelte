@@ -1,11 +1,17 @@
 <script>
 	import { fly } from 'svelte/transition';
-	import { question__data, attempt__ques } from '../store';
+	import { question__data, choose__ans } from '../store';
 	import { clickOutside } from '../function/clickOutside';
 	import { createEventDispatcher } from 'svelte';
 	import { truncate } from '../function/truncate';
+	import { afterUpdate } from 'svelte';
 	const dispatch = createEventDispatcher();
 	export let show = false;
+	let total__attempted = 0;
+	afterUpdate(() => {
+		let data = $choose__ans.filter(Boolean);
+		total__attempted = data.length;
+	});
 	const displayQues = (i) => {
 		dispatch('displayQuesNum', i);
 	};
@@ -22,8 +28,8 @@
 		style="width:250px;top:58px"
 		transition:fly={{ x: -250, opacity: 1 }}
 	>
-		<p class="mb-1 border p-1">Attempte question:{$attempt__ques}</p>
-		<p class="border p-1">Unuttempted Question:{$question__data.length - $attempt__ques}</p>
+		<p class="mb-1 border p-1">Attempte question:{total__attempted}</p>
+		<p class="border p-1">Unuttempted Question:{$question__data.length - total__attempted}</p>
 		<hr />
 		{#each $question__data as data, i}
 			<!-- svelte-ignore a11y-accesskey -->
